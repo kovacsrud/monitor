@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiBMI13c2cs2025.Mvvm.View.StartPage"
+             Title="StartPage" NavigationPage.HasNavigationBar="False">
+    <Grid RowDefinitions="*,*,*">
+        <Label Text="BMI index számítás" FontSize="Large" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+        <Button x:Name="buttonTovabb" Text="Tovább" FontSize="Medium" Grid.Row="2" WidthRequest="200" HeightRequest="50" Clicked="buttonTovabb_Clicked"/>
+    </Grid>
+</ContentPage>

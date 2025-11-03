@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+    
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiBMI13c2cs2025.Mvvm.View.BmiPage"
+             xmlns:converter="clr-namespace:MauiBMI13c2cs2025.converters"
+             Title="BmiPage" NavigationPage.HasNavigationBar="False">
+    
+    <ContentPage.Resources>
+        <converter:BmiErtekConverter x:Key="BmiErtekConverter" />
+    </ContentPage.Resources>
+    
+    
+    <Grid RowDefinitions="*,*,*,*,*,*" ColumnDefinitions="1*,2*">
+        <Label Text="Bmi index számítás" VerticalOptions="Center" HorizontalOptions="Center" Grid.ColumnSpan="2" />
+        <Label Text="Testsúly" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+        <Label Text="Magasság(cm)" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center"/>
+        <Entry Text="{Binding TestTomeg}"  Grid.Row="1" Grid.Column="1" HeightRequest="40" WidthRequest="200"/>
+        <Entry Text="{Binding Magassag}" Grid.Row="2" Grid.Column="1" HeightRequest="40" WidthRequest="200"/>
+
+        <Label Text="{Binding BmiErtek , StringFormat='{0:F2}',Converter={StaticResource BmiErtekConverter}}" Grid.Row="3" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Center"/>
+        <Label Text="{Binding BmiSzoveg}" Grid.Row="4" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Center"/>
+
+
+        <Button x:Name="buttonSzamol" Text="Számolás" WidthRequest="200" HeightRequest="50" Grid.Row="5" Grid.ColumnSpan="2" Command="{Binding BmiSzamolCommand}"/>
+
+
+    </Grid>
+</ContentPage>
