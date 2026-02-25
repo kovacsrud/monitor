@@ -15,7 +15,7 @@ export default function Menu() {
                             <summary>Parent</summary>
                             <ul className="bg-base-100 rounded-t-none p-2">
                                 <li><Link href="/components/cars">Link 1</Link></li>
-                                <li><a>Link 2</a></li>
+                                <li><Link href="/components/cars2">Link 2</Link></li>
                             </ul>
                         </details>
                     </li>
