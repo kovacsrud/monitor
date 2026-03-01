@@ -1,0 +1,38 @@
+﻿<Window x:Class="WpfDolgozokEF.mvvm.view.DolgozokView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfDolgozokEF.mvvm.view"
+        mc:Ignorable="d"
+        Title="DolgozokView" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid ItemsSource="{Binding Dolgozok}" AutoGenerateColumns="False" ColumnWidth="*" IsReadOnly="true" SelectedItem="{Binding SelectedDolgozo}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Név" Binding="{Binding Nev}" />
+                <DataGridTextColumn Header="Anyja neve" Binding="{Binding AnyjaNeve}" />
+                <DataGridTemplateColumn Header="Fotó">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding DolgozoKep}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    
+                </DataGridTemplateColumn>
+                
+
+
+            </DataGrid.Columns>
+            
+        </DataGrid>
+        <Button x:Name="buttonUj" Content="Új dolgozó" Width="200" Height="30" Grid.Row="1" Click="buttonUj_Click"/>
+
+
+
+    </Grid>
+</Window>
