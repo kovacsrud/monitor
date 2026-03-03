@@ -20,6 +20,7 @@ namespace WpfMunkaugyEF.mvvm.viewmodel
         public ObservableCollection<Nyilvantarta> Nyilvantartas { get; set; }
 
         public Dolgozo SelectedDolgozo { get; set; }
+        public Nyilvantarta SelectedNyilvantartas { get; set; }
 
         public DolgozoViewModel()
         {

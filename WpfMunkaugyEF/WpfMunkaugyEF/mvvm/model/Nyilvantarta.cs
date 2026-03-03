@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using PropertyChanged;
 
 namespace WpfMunkaugyEF.mvvm.model;
+[AddINotifyPropertyChangedInterface]
 
 public partial class Nyilvantarta
 {
