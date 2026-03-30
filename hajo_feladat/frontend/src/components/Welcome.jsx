@@ -1,0 +1,16 @@
+import Hatter from '../assets/balaton.jpg';
+
+function Welcome() {
+  return (
+    <div className="relative h-96 flex items-center justify-center overflow-hidden rounded-xl m-4">
+      <img src={Hatter} alt="Balaton" className="absolute w-full h-full object-cover opacity-80" />
+      
+      <div className="relative z-10 bg-white/70 p-8 rounded-lg shadow-xl text-center border-2 border-blue-300">
+        <h2 className="text-4xl font-bold text-blue-900 mb-4">Üdvözöljük a Hajózási Portálon!</h2>
+        <p className="text-blue-800 text-lg">Válasszon a fenti menüpontok közül a flotta megtekintéséhez vagy új hajó rögzítéséhez.</p>
+      </div>
+    </div>
+  );
+}
+
+export default Welcome;
