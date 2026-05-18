@@ -5,12 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfJson"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="450" Width="800" Closing="Window_Closing">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="37*"/>
+            <ColumnDefinition Width="43*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="226*"/>
-            <RowDefinition Height="93*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <StackPanel x:Name="dataStack"></StackPanel>
+        <ListBox x:Name="listboxFajlok" ItemsSource="{Binding FileItems,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="200" SelectionChanged="listboxFajlok_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding FileName}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            
+        </ListBox>
+        <Image x:Name="imageKep" Grid.Column="1"/>
+        <Button x:Name="buttonTallozas" Content="Fájlok hozzáadása" Width="200" Height="30" FontSize="16" Grid.Row="1" Click="buttonTallozas_Click" Grid.ColumnSpan="2" Margin="300,9,300,9"/>
+
     </Grid>
 </Window>

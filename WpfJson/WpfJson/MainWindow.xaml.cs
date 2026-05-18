@@ -1,12 +1,6 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
+﻿using Microsoft.Win32;
+using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfJson.model;
 
 namespace WpfJson
 {
@@ -24,44 +19,60 @@ namespace WpfJson
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string apiKey = "ec5f5e5540a6fa9e1bbe6d2cb42fcdb2e9f14e78ba6214bc4b08973142bf5190";
-        JObject jsonData;
-        JsonSerializer serializer;
-
+        //string[] kepek;
+        public FileList FileList { get; set; } 
+        string jsonFajl = "files.json";
         public MainWindow()
         {
             InitializeComponent();
-            serializer = new JsonSerializer();
+            FileList = new FileList();
+            
+            if (File.Exists(jsonFajl))
+            {
+                FileList=JsonTools.JsonToList(jsonFajl);
+            }
 
-            
-            getData("2.16.64.3");
-            
-            //hasznos lehet később!
-            //dynamic item = serializer.Deserialize(jsonData);
-            putToPanel("cityName");
-            putToPanel("countryName");
-            putToPanel("latitude");
-            putToPanel("longitude");
-            var city = jsonData["cityName"];
-            Debug.WriteLine(city);
+            listboxFajlok.DataContext = FileList;
+
         }
 
-        public void getData(string ip)
+        private void buttonTallozas_Click(object sender, RoutedEventArgs e)
         {
-            jsonData = JObject.Parse(new WebClient().DownloadString($"http://api.ipinfodb.com/v3/ip-city/?key={apiKey}&ip={ip}&format=json"));
-
-            Debug.WriteLine(jsonData.ToString());
-            
-
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = ".png|*.png|.jpg|*.jpg|minden fájl|*.*";
+            dialog.Multiselect = true;
+            if (dialog.ShowDialog()==true)
+            {
+                //listboxFajlok.ItemsSource = dialog.FileNames;
+                //kepek= dialog.FileNames;
+                //imageKep.Source = new BitmapImage(new Uri(kepek.First()));
+                FileList.SetFileList(dialog.FileNames, '\\');
+                listboxFajlok.SelectedIndex = 0;
+            }
         }
-        public void putToPanel(string jsonField)
+
+        private void listboxFajlok_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Label label = new Label();
-            label.FontSize = 18;
-            label.Content = jsonData[$"{jsonField}"];
-            dataStack.Children.Add(label);
+            //imageKep.Source = new BitmapImage(new Uri(listboxFajlok.SelectedItem.ToString()));
+            if (listboxFajlok.SelectedItem!=null)
+            {
+                var selected = (FileItem)listboxFajlok.SelectedItem;
+                imageKep.Source= new BitmapImage(new Uri(selected.FullPath));
+            }
+            
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                JsonTools.ListToJson(jsonFajl, FileList);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);                
+            }
+            
         }
     }
 }
-//free ipinfodb apikey
-//ec5f5e5540a6fa9e1bbe6d2cb42fcdb2e9f14e78ba6214bc4b08973142bf5190
