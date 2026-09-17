@@ -1,0 +1,59 @@
+1. A probléma leírása
+
+A „Zöld Út” autókölcsönző eddig egyetlen nagy Excel táblában vezette az adatait. A cégvezető panaszkodik, hogy az adatok ismétlődnek, a táblázat átláthatatlan, és gyakran előfordul, hogy egy autóhoz több különböző márkanevet is beírnak véletlenül.
+
+A jelenlegi Excel tábla oszlopai:
+
+    Bérlés azonosító
+    Ügyfél neve
+    Ügyfél telefonszáma
+    Ügyfél lakcíme
+    Autó rendszáma
+    Autó típusa (pl. Corolla)
+    Autó márkája (pl. Toyota)
+    Autó napi bérleti díja
+    Bérlés kezdete (dátum)
+    Bérlés vége (dátum)
+    Kifizetett összeg
+    Bérlés állapota (Folyamatban / Lezárva)
+
+Üzleti szabályok:
+
+    Egy ügyfél többször is bérelhet autót az idők során.
+    Egy konkrét autót egyszerre csak egy ügyfél bérelhet (időben nem fedhetik át egymást).
+    Egy bérlés során csak egy autót visznek el. Ha az ügyfél két autót akar, az két külön bérlés.
+    Az autók márkáját és típusát külön kell kezelni, hogy ne lehessen elgépelni őket (pl. ne legyen „Toyotta” és „Toyota” is a rendszerben).
+
+2. A tanuló feladatai
+
+    Egyed-kapcsolat (ER) tervezés: Határozd meg az egyedeket és a köztük lévő kapcsolatokat (1:1, 1:N vagy M:N)! Rajzold fel az ER diagramot (téglalapok az egyedeknek, rombuszok a kapcsolatoknak).
+    Normalizálás: Alakítsd át az adatokat úgy, hogy megfeleljenek a 3. Normálformának (3NF)!
+        Szüntesd meg az ismétlődő csoportokat.
+        Minden nem kulcs attribútum csak a teljes kulcstól függjön.
+        Szüntesd meg a tranzitív függőségeket (pl. a márkát ne az autóhoz, hanem egy külön táblához kösd).
+    Fizikai terv (Adatbázis diagram): Rajzold fel a végleges táblaszerkezetet!
+        Jelöld az Elsődleges Kulcsokat (PK) és az Idegen Kulcsokat (FK).
+        Határozd meg az oszlopok adattípusát (pl. INT, VARCHAR, DATE, DECIMAL).
+
+3. Segédlet a javításhoz (Tanári kulcs)
+
+Várható egyedek:
+
+    Ügyfél (id, név, tel, lakcím)
+    Márka (id, márkanév) – A 3NF miatt fontos külön venni!
+    Modell (id, modellnév, márka_id, napi_díj)
+    Autó (rendszám, modell_id)
+    Bérlés (id, ügyfél_id, rendszám, kezdet, vége, állapot, fizetett_összeg)
+
+Várható kapcsolatok:
+
+    Márka – Modell: 1:N (Egy márka több modell, de egy modell egy márka).
+    Modell – Autó: 1:N (Egy modellből több autónk is lehet, pl. 3 db fehér Toyota Corolla).
+    Ügyfél – Bérlés: 1:N (Egy ügyfél sokszor bérelhet).
+    Autó – Bérlés: 1:N (Egy autót sokszor kibérelhetnek az élettartama alatt).
+
+Bónusz kérdés a diákoknak:
+
+„Melyik táblába érdemes tenni a fizetett_összeg mezőt? Miért ne számított mezőként tároljuk, ha a napi díj és a napok száma alapján kiszámolható?” (Válasz: A bérlés táblába kell. Azért nem elég a számítás, mert a napi díj az évek alatt változhat a Modell táblában, de a régi bérlések összegének fixnek kell maradnia a könyvelés miatt.)
+
+Szeretnéd, hogy az Adatbázis-tervezési modul után rátérjünk a 15. óra részletes kidolgozására?

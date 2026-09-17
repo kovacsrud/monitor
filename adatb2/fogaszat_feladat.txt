@@ -1,0 +1,55 @@
+Ez a feladat egy kicsit összetettebb lesz, mivel itt nemcsak a fizikai tárgyakat, hanem a szolgáltatásokat és az időpontokat is kezelni kell.
+
+Adatbázis-tervezési Feladat: „Fényes Mosoly” Fogászati Klinika
+
+1. A probléma leírása
+A „Fényes Mosoly” klinika jelenleg papíralapú kartonokon és egy kockás füzetben vezeti az előjegyzéseket. A káosz miatt gyakran előfordul, hogy két beteget hívnak ugyanarra az időpontra, vagy elfelejtik, melyik orvos melyik szobában rendel.
+
+A füzetben található feljegyzések struktúrája:
+- Időpont (dátum és óra:perc)
+- Beteg neve
+- Beteg TAJ száma
+- Beteg születési dátuma
+- Kezelés típusa (pl. tömés, húzás, fogkő-eltávolítás)
+- Kezelés alapdíja
+- Kezelőorvos neve
+- Orvos pecsétszáma
+- Orvos szakterülete (pl. szájsebész, esztétikai fogászat)
+- Rendelőszoba száma (ahol az orvos éppen dolgozik)
+- A szoba felszereltsége (pl. "panoráma röntgen van", "csak alapfelszerelés")
+
+Üzleti szabályok:
+1.  Egy orvosnak van egy elsődleges szakterülete, de több különböző típusú kezelést is végezhet.
+2.  Egy szobában egyszerre csak egy orvos rendelhet egy adott időpontban.
+3.  Egy betegnek több időpontja is lehet (pl. először konzultáció, aztán műtét).
+4.  Minden kezelésnek van egy fix alapdíja, de az orvos a kezelés végén ettől eltérő (pl. kedvezményes) végösszeget is megadhat.
+
+2. A tanuló feladatai
+
+1.  Egyed-kapcsolat (ER) tervezés: Határozd meg az egyedeket (Entity) és a köztük lévő kapcsolatokat! Ügyelj az M:N kapcsolatok feloldására, ha szükséges. Rajzold fel az ER diagramot!
+2.  Normalizálás: Hozd létre a táblaszerkezetet 3NF-ben!
+    - Válaszd szét a beteget az időponttól.
+    - Válaszd szét az orvost a szobától (hiszen az orvos cserélődhet a szobában).
+    - Kezeld külön a kezelési típusokat (tömés, húzás stb.), hogy az árakat egy helyen lehessen módosítani.
+3.  Adatbázis diagram: Készítsd el a fizikai tervet!
+    - Határozz meg minden táblához Elsődleges Kulcsot (PK).
+    - Helyezd el az Idegen Kulcsokat (FK).
+    - Adj meg pontos adattípusokat (pl. CHAR(9) a TAJ számnak, DATETIME az időpontnak).
+
+3. Segédlet a javításhoz (Tanári kulcs)
+
+Várható táblák (3NF):
+- Betegek: taj_szam (PK), név, szül_datum, telefon.
+- Orvosok: pecsetszam (PK), név, szakterület.
+- Szobák: szobaszam (PK), felszereltseg.
+- Kezeles_Tipusok: id (PK), megnevezes, alap_ar.
+- Idopontok / Kezelesek: id (PK), beteg_taj (FK), orvos_id (FK), szoba_id (FK), kezeles_id (FK), datum_ido, vegleges_ar.
+
+Logikai bukfenc, amire a diáknak rá kell jönnie:
+Az orvos és a szoba kapcsolata trükkös. Ha az orvos fixen egy szobában van, akkor az orvos táblába kell a szobaszam. De ha az orvos délelőtt az 1-esben, délután a 2-esben rendel, akkor a szobát az Időpont (Kezelés) táblához kell kötni! (A feladat leírása az utóbbit sugallja).
+
+Bónusz kérdés a diákoknak:
+„Miért nem jó ötlet a beteg nevét használni elsődleges kulcsként? Adj két indokot is!”
+(Válasz: 1. Lehet két Kovács János nevű beteg (névütközés). 2. A név változhat, pl. házasság esetén, az elsődleges kulcsnak pedig állandónak kellene lennie.)
+
+Hogy tetszik ez a feladat? Ha gondolod, készíthetek egy interaktív segédletet is a diákoknak a leképezés (ER -> Tábla) gyakorlásához.
