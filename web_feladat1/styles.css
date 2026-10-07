@@ -1,0 +1,101 @@
+body {
+  font-family: Tahoma;
+  background-image: url('./assets/hatter.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  color: #ffffff;
+}
+
+#content {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: rgba(11, 30, 45, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+header p {
+  color: #E5E7EB;;
+  text-align: center;
+}
+
+section {
+  margin-bottom: 25px;
+  padding: 15px;
+  border-left: 4px solid #22D3EE;
+  border-bottom: 4px solid #22D3EE;
+  background: rgba(255,255,255,0.15);
+  border-radius: 10px;
+}
+
+h1 {
+  font-size: 45px;
+  color: #22D3EE;
+  margin-bottom: 5px;
+}
+
+h1, h2 {
+  color: #22D3EE;
+}
+
+p {
+  text-align: justify;
+  line-height: 1.5;
+  color: #ffffff;
+}
+
+ul {
+  list-style-type: lower-alpha;
+}
+
+#erdekesseg {
+  list-style-type: square;
+}
+
+.images {
+  display: flex;
+  gap: 120px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.images img {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 15px;
+  border: 3px dotted #45FBEC;
+}
+
+table {
+  width: 100%;
+  border-collapse:separate;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background-color: rgb(19, 151, 171);
+}
+
+td {
+  background-color: rgba(98, 98, 98, 0.883);
+}
+
+a {
+  color: #E3F054;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #4cb4f5;
+}
