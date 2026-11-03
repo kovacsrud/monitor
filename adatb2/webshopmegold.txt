@@ -1,0 +1,179 @@
+
+
+Listázzuk ki azokat a termékeket, amelyek drágábbak 10.000 Ft-nál, ár szerint csökkenő sorrendben!
+
+SELECT nev, ar, keszlet 
+FROM termekek 
+WHERE ar > 10000 
+ORDER BY ar DESC;
+
+
+Hány vásárlónk van városonként?
+
+SELECT varos, COUNT(*) AS vasarlok_szama 
+FROM vasarlok 
+GROUP BY varos;
+
+
+Listázzuk ki a rendeléseket a vásárlók nevével együtt!
+
+SELECT r.id AS rendeles_azonosito, v.nev AS vasarlo_neve, r.rendeles_datuma, r.statusz
+FROM rendelesek r
+INNER JOIN vasarlok v ON r.vasarlo_id = v.id;
+
+Melyik az a kategória, amelyikben még egyetlen termék sincs?
+
+SELECT k.nev AS kategoria_neve
+FROM kategoriak k
+LEFT JOIN termekek t ON k.id = t.kategoria_id
+WHERE t.id IS NULL;
+
+
+Mennyi az egyes rendelések végösszege (csak a 'Kiszállítva' státuszúak)?
+
+
+SELECT r.id AS rendeles_id, v.nev, SUM(rt.mennyiseg * rt.egysegar) AS vegosszeg
+FROM rendelesek r
+JOIN vasarlok v ON r.vasarlo_id = v.id
+JOIN rendeles_tetelek rt ON r.id = rt.rendeles_id
+WHERE r.statusz = 'Kiszállítva'
+GROUP BY r.id, v.nev;
+
+
+Listázd ki az összes budapesti vásárló nevét és email címét!
+
+SELECT nev, email FROM vasarlok WHERE varos = 'Budapest';
+
+Melyek azok a termékek, amelyekből jelenleg nincs készleten (a készlet 0)?
+
+SELECT nev FROM termekek WHERE keszlet = 0;
+
+Listázd ki a termékeket, amelyek nevében szerepel a "könyv" szó (kis- és nagybetű nem számít)!
+
+SELECT * FROM termekek WHERE nev LIKE '%könyv%';
+
+Mennyi a legolcsóbb és a legdrágább termék ára? (Egy lekérdezésben).
+
+SELECT MIN(ar) AS legolcsobb, MAX(ar) AS legdragabb FROM termekek;
+
+Listázd ki a 2023. május 1. után regisztrált vásárlókat!
+
+SELECT * FROM vasarlok WHERE regisztracio_datuma > '2023-05-01';
+
+Írasd ki a termékek nevét és melléjük a kategóriájuk nevét!
+
+SELECT t.nev AS termek, k.nev AS kategoria 
+FROM termekek t 
+INNER JOIN kategoriak k ON t.kategoria_id = k.id;
+
+Hány darab termék tartozik az egyes kategóriákba? (A kategória neve és a darabszám jelenjen meg).
+
+SELECT k.nev, COUNT(t.id) AS termekek_szama 
+FROM kategoriak k 
+LEFT JOIN termekek t ON k.id = t.kategoria_id 
+GROUP BY k.id, k.nev;
+-- (A LEFT JOIN miatt a 'Sport' is megjelenik 0-val, ami a helyes eredmény).
+
+
+Kik azok a vásárlók, akik még soha nem adtak le rendelést?
+
+
+SELECT v.nev, v.email 
+FROM vasarlok v 
+LEFT JOIN rendelesek r ON v.id = r.vasarlo_id 
+WHERE r.id IS NULL;
+
+
+Melyik termékből hány darabot adtak el összesen (függetlenül a rendelés státuszától)? Csak az eladott termékek jelenjenek meg, a legtöbbet eladott legyen elöl!
+
+SELECT t.nev, SUM(rt.mennyiseg) AS eladott_mennyiseg 
+FROM termekek t 
+JOIN rendeles_tetelek rt ON t.id = rt.termek_id 
+GROUP BY t.id, t.nev 
+ORDER BY eladott_mennyiseg DESC;
+
+
+Listázd ki "Kovács János" összes rendelésének dátumát és státuszát!
+
+
+SELECT r.rendeles_datuma, r.statusz 
+FROM rendelesek r 
+JOIN vasarlok v ON r.vasarlo_id = v.id 
+WHERE v.nev = 'Kovács János';
+
+
+Mennyi a webshop teljes bevétele a már 'Kiszállítva' státuszú rendelésekből?
+
+SELECT SUM(rt.mennyiseg * rt.egysegar) AS teljes_bevetel
+FROM rendeles_tetelek rt
+JOIN rendelesek r ON rt.rendeles_id = r.id
+WHERE r.statusz = 'Kiszállítva';
+
+
+Kik azok a vásárlók, akiknek több mint 1 rendelésük van (bármilyen státuszú)? Írasd ki a nevüket és a rendeléseik számát!
+
+
+SELECT v.nev, COUNT(r.id) AS rendelesek_szama
+FROM vasarlok v
+JOIN rendelesek r ON v.id = r.vasarlo_id
+GROUP BY v.id, v.nev
+HAVING COUNT(r.id) > 1;
+
+
+Melyek azok a termékek, amelyeknek az ára magasabb, mint az összes termék átlagára? (Használj allekérdezést / subquery-t!).
+
+SELECT nev, ar 
+FROM termekek 
+WHERE ar > (SELECT AVG(ar) FROM termekek);
+
+Listázd ki, hogy az egyes vásárlók összesen mennyi pénzt költöttek eddig (a 'Törölve' státuszú rendeléseket NE számold bele)! Azok is jelenjenek meg 0 Ft-tal, akik nem rendeltek.
+
+SELECT v.nev, COALESCE(SUM(rt.mennyiseg * rt.egysegar), 0) AS osszes_koltes
+FROM vasarlok v
+LEFT JOIN rendelesek r ON v.id = r.vasarlo_id AND r.statusz != 'Törölve'
+LEFT JOIN rendeles_tetelek rt ON r.id = rt.rendeles_id
+GROUP BY v.id, v.nev
+ORDER BY osszes_koltes DESC;
+-- (A COALESCE függvény a NULL értéket 0-ra cseréli azoknál, akik nem vásároltak).
+
+
+Volt olyan termék, amit a jelenlegi listaáránál (termekek.ar) olcsóbban adtak el (rendeles_tetelek.egysegar)? Ha igen, melyik az, mennyi a listaára és mennyiért adták el?
+
+
+SELECT t.nev, t.ar AS jelenlegi_ar, rt.egysegar AS eladasi_ar
+FROM termekek t
+JOIN rendeles_tetelek rt ON t.id = rt.termek_id
+WHERE rt.egysegar < t.ar;
+
+Melyek azok a termékkategóriák, ahol a termékek átlagára meghaladja a 30.000 Ft-ot?
+
+SELECT k.nev AS kategoria_neve, ROUND(AVG(t.ar), 0) AS atlagar
+FROM kategoriak k
+JOIN termekek t ON k.id = t.kategoria_id
+GROUP BY k.id, k.nev
+HAVING AVG(t.ar) > 30000;
+
+
+Keresd meg a "VIP vásárlókat"! Kik azok, akik az eddigi összes rendelésük során (státusztól függetlenül) összesen több mint 50.000 Ft-ot költöttek?
+
+
+SELECT v.nev AS vasarlo_neve, SUM(rt.mennyiseg * rt.egysegar) AS osszes_koltes
+FROM vasarlok v
+JOIN rendelesek r ON v.id = r.vasarlo_id
+JOIN rendeles_tetelek rt ON r.id = rt.rendeles_id
+GROUP BY v.id, v.nev
+HAVING SUM(rt.mennyiseg * rt.egysegar) > 50000
+ORDER BY osszes_koltes DESC;
+
+
+Melyek azok a népszerű termékek, amelyekből összesen legalább 3 darabot adtak el, DE a 'Törölve' státuszú rendeléseket nem számoljuk bele?
+
+
+SELECT t.nev AS termek_neve, SUM(rt.mennyiseg) AS eladott_darabszam
+FROM termekek t
+JOIN rendeles_tetelek rt ON t.id = rt.termek_id
+JOIN rendelesek r ON rt.rendeles_id = r.id
+WHERE r.statusz != 'Törölve'        -- 1. lépés: Sorok szűrése
+GROUP BY t.id, t.nev                -- 2. lépés: Csoportosítás
+HAVING SUM(rt.mennyiseg) >= 3;      -- 3. lépés: Csoportok szűrése
+
