@@ -1,0 +1,25 @@
+GET http://localhost:3000/coffees
+###
+GET http://localhost:3000/coffees/2
+###
+POST http://localhost:3000/coffees
+Content-Type: application/json
+
+{
+    "id": 16,
+    "name": "Green Eye",
+    "roast": "Light",
+    "price": 810
+   
+}
+###
+PUT http://localhost:3000/coffees/3
+Content-Type: application/json
+
+{
+    "name": "Latte Macchiato",
+    "roast": "Light",
+    "price": 980
+}   
+###
+DELETE http://localhost:3000/coffees/KVTodIAcgXk

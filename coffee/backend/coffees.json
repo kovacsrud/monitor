@@ -1,0 +1,107 @@
+{
+  "coffees": [
+    {
+      "id": "1",
+      "name": "Espresso",
+      "roast": "Dark",
+      "price": 650
+    },
+    {
+      "id": "2",
+      "name": "Cappuccino",
+      "roast": "Medium",
+      "price": 850
+    },
+    {
+      "name": "Latte Macchiato",
+      "roast": "Light",
+      "price": 980,
+      "id": "3"
+    },
+    {
+      "id": "4",
+      "name": "Americano",
+      "roast": "Light",
+      "price": 700
+    },
+    {
+      "id": "5",
+      "name": "Flat White",
+      "roast": "Medium",
+      "price": 990
+    },
+    {
+      "id": "6",
+      "name": "Ristretto",
+      "roast": "Dark",
+      "price": 600
+    },
+    {
+      "id": "7",
+      "name": "Mocha",
+      "roast": "Medium",
+      "price": 1050
+    },
+    {
+      "id": "8",
+      "name": "Cortado",
+      "roast": "Dark",
+      "price": 780
+    },
+    {
+      "id": "9",
+      "name": "Cold Brew",
+      "roast": "Light",
+      "price": 1100
+    },
+    {
+      "id": "10",
+      "name": "Affogato",
+      "roast": "Medium",
+      "price": 1200
+    },
+    {
+      "id": "11",
+      "name": "Irish Coffee",
+      "roast": "Dark",
+      "price": 1500
+    },
+    {
+      "id": "12",
+      "name": "Doppio",
+      "roast": "Dark",
+      "price": 750
+    },
+    {
+      "id": "13",
+      "name": "Vienna Coffee",
+      "roast": "Medium",
+      "price": 1150
+    },
+    {
+      "id": "14",
+      "name": "Café au Lait",
+      "roast": "Light",
+      "price": 890
+    },
+    {
+      "id": "15",
+      "name": "Red Eye",
+      "roast": "Dark",
+      "price": 920
+    },
+    {
+      "id": "qWIwQ-7-43A",
+      "name": "Green Eye",
+      "roast": "Light",
+      "price": 810
+    },
+    {
+      "id": "sm_VqzuyNpM",
+      "name": "kotyogós",
+      "roast": "dark",
+      "price": "720"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
