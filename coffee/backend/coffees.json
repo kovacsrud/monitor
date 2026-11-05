@@ -101,6 +101,12 @@
       "name": "kotyogós",
       "roast": "dark",
       "price": "720"
+    },
+    {
+      "id": "trT98uic_cg",
+      "name": "Blue Eye",
+      "roast": "Light",
+      "price": "830"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -7,7 +7,7 @@ Content-Type: application/json
 
 {
     "id": 16,
-    "name": "Green Eye",
+    "name": "Blue Eye",
     "roast": "Light",
     "price": 810
    
